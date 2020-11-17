@@ -10,8 +10,6 @@ public class SplashScreen : MonoBehaviour
     private bool _isTweening;
     public event EventHandler OnSplashScreenClickEvent;
 
-
-
     private void Awake()
     {
         _splashText   = GameObject.Find("SplashText").GetComponent<RectTransform>();

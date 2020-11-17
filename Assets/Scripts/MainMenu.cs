@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    CanvasGroup _mainMenuScreen, _quitBtnYesCG, _quitBtnNoCG;
+    private CanvasGroup _mainMenuScreen, _quitBtnYesCG, _quitBtnNoCG;
+    private GameObject _gamePlay;
     private RectTransform _mainMenuPlay, _mainMenuContinue, _mainMenuOptions, _mainMenuAbout, _mainMenuQuit, _mainMenuSubPanel, _quitBtnYes, _quitBtnNo;
+
+
 
     private Vector3 _playBtnIn, _playBtnOut, _contBtnIn, _contBtnOut, _optBtnIn, _optBtnOut, _abtBtnIn, _abtBtnOut, _quitBtnIn, _quitBtnOut;
     private Vector2 _mainMenuSubPanelSize;
@@ -17,6 +20,7 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
+        _gamePlay               = GameObject.Find("GameplayScreen");
         _mainMenuPlay           = GameObject.Find("MainMenuPlay")       .GetComponent<RectTransform>();
         _mainMenuContinue       = GameObject.Find("MainMenuContinue")   .GetComponent<RectTransform>();
         _mainMenuOptions        = GameObject.Find("MainMenuOptions")    .GetComponent<RectTransform>();
@@ -58,6 +62,8 @@ public class MainMenu : MonoBehaviour
         };
 
         currentTextID = 0;
+
+        _gamePlay.SetActive(false);
     }
 
     private void Start()
@@ -120,6 +126,8 @@ public class MainMenu : MonoBehaviour
         LeanTween.move(_mainMenuQuit        .gameObject, _quitBtnOut , 0.5f).setEase(LeanTweenType.easeOutQuad).setDelay(0.7f);
 
         LeanTween.alphaCanvas(_mainMenuScreen, 0f, 0.5f).setDelay(1f);
+        _gamePlay.SetActive(false);
+        _gamePlay.SetActive(true);
     }
 
     private void Continue()

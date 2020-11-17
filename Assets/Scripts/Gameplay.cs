@@ -1,32 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Gameplay : MonoBehaviour
 {
     private RectTransform _backToMain;
-    private Vector3 _backToMainIn, _backToMainOut;
+    private Button _backToMainBtn;
+    private GameObject _mainMenu;
 
     private void Awake()
     {
         _backToMain = GameObject.Find("GameplayScreenPanelButton").GetComponent<RectTransform>();
-
-        _backToMainOut = _backToMain.position;
-        _backToMainIn = _backToMainOut + new Vector3(0, _backToMain.position.y + 128, 0);
+        _mainMenu = GameObject.Find("MainMenu");
+        _backToMain.gameObject.AddComponent<CanvasGroup>();
+        _backToMainBtn = _backToMain.gameObject.GetComponent<Button>();
+        _backToMainBtn.onClick.AddListener(ReturnToMain);
     }
 
     private void Start()
     {
-        LeanTween.cancelAll();
+        LeanTween.alphaCanvas(_backToMain.gameObject.GetComponent<CanvasGroup>(), 0f, 0f);
     }
 
     private void OnEnable()
     {
-        LeanTween.move(_backToMain.gameObject, _backToMainIn, 0.5f);
+        LeanTween.alphaCanvas(_backToMain.gameObject.GetComponent<CanvasGroup>(), 1f, 0.5f).setDelay(1f);
     }
 
     private void OnDisable()
     {
-        LeanTween.move(_backToMain.gameObject, _backToMainOut, 0f);
+        LeanTween.alphaCanvas(_backToMain.gameObject.GetComponent<CanvasGroup>(), 0f, 0f);
     }
+
+    private void ReturnToMain()
+    {
+        _mainMenu.SetActive(false);
+        _mainMenu.SetActive(true);
+        LeanTween.alphaCanvas(_backToMain.gameObject.GetComponent<CanvasGroup>(), 0f, 1f);
+    }
+
 }
